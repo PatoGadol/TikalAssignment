@@ -6,8 +6,9 @@ import java.io.Serializable;
  * Created by Sopher on 22/03/2017.
  */
 public class WebAccount implements Serializable {
-        String userName;
-        String password;
+    String userName;
+    String password;
+    String email;
 
     public String getUserName() {
         return userName;
@@ -32,8 +33,6 @@ public class WebAccount implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    String email;
 
     @Override
     public String toString() {

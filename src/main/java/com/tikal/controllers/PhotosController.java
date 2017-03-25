@@ -2,6 +2,7 @@ package com.tikal.controllers;
 
 import com.tikal.services.PhotosHandler;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,16 @@ import java.io.IOException;
 @RestController
 @EnableAutoConfiguration
 public class PhotosController {
+
+    @GetMapping(value = "/hello")
+    public String getHello() {
+        return "hello";
+    }
+
+   @GetMapping(value = "/bye")
+    public String getBye() {
+        return "bye";
+    }
 
     @PostMapping(value = "/upload_photos")
     public String uploadingPost(@RequestParam("user") String userName,

@@ -1,18 +1,20 @@
-package com.tikal.dal.entities;
+package com.tikal.auth.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by Sopher on 22/03/2017.
  */
 
 @Entity
+@Table(name = "account")
 public class Account  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long   userId;
+    private Long userId;
 
     @Column(nullable = false)
     private String userName;
@@ -24,12 +26,14 @@ public class Account  implements Serializable {
     private String email;
 
     @Column(nullable = false)
-    private Date   createdOn;
+    private Date createdOn;
 
     @Column(nullable = false)
-    private Date   lastLogin;
+    private Date lastLogin;
 
-
+    @ManyToMany
+    @JoinTable(name = "account_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
     public Long getUserId() {
         return userId;
@@ -79,6 +83,14 @@ public class Account  implements Serializable {
         this.lastLogin = lastLogin;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -91,7 +103,8 @@ public class Account  implements Serializable {
         if (password != null ? !password.equals(account.password) : account.password != null) return false;
         if (email != null ? !email.equals(account.email) : account.email != null) return false;
         if (createdOn != null ? !createdOn.equals(account.createdOn) : account.createdOn != null) return false;
-        return lastLogin != null ? lastLogin.equals(account.lastLogin) : account.lastLogin == null;
+        if (lastLogin != null ? !lastLogin.equals(account.lastLogin) : account.lastLogin != null) return false;
+        return roles != null ? roles.equals(account.roles) : account.roles == null;
     }
 
     @Override
@@ -102,6 +115,7 @@ public class Account  implements Serializable {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (createdOn != null ? createdOn.hashCode() : 0);
         result = 31 * result + (lastLogin != null ? lastLogin.hashCode() : 0);
+        result = 31 * result + (roles != null ? roles.hashCode() : 0);
         return result;
     }
 
@@ -114,6 +128,7 @@ public class Account  implements Serializable {
                 ", email='" + email + '\'' +
                 ", createdOn=" + createdOn +
                 ", lastLogin=" + lastLogin +
+                ", roles=" + roles +
                 '}';
     }
 }

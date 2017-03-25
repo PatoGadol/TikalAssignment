@@ -1,7 +1,8 @@
 package com.tikal.controllers;
 
-import com.tikal.accounts.AccountHandler;
+import com.tikal.accounts.AccountService;
 import com.tikal.web.entities.WebAccount;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,15 +14,15 @@ import org.springframework.web.bind.annotation.*;
 @EnableAutoConfiguration
 public class SubscribeController {
 
+    @Autowired
+    AccountService accountServiceImpl;
     @PostMapping(value = "/add_account")
-    public String addAccount(@RequestParam("account") WebAccount account) {
-        AccountHandler ac = new AccountHandler();
-        ac.createNewAccount(AccountHandler.convertWebAccountToAccount(account));
+    public String addAccount(@RequestBody WebAccount account) {
+        accountServiceImpl.createNewAccount(accountServiceImpl.convertWebAccountToAccount(account));
         return "user_id:" + 0;
     }
 
     @DeleteMapping(value = "/delete_user")
-    @ResponseBody
     public String deleteUser(String user) {
         return "";
     }
