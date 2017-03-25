@@ -1,3 +1,8 @@
+-- Create Sequence
+
+create sequence role_role_id_seq increment by 1 minvalue 1 no maxvalue start with 1
+
+
 -- Table: public.role
 
 -- DROP TABLE public.role;
@@ -16,3 +21,7 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.role
     OWNER to postgres;
+
+-- Alter Sequence
+
+alter sequence role_role_id_seq owned by role.role_id

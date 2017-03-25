@@ -1,3 +1,8 @@
+-- Create Sequence
+
+create sequence account_user_id_seq increment by 1 minvalue 1 no maxvalue start with 1
+
+
 -- Table: public.account
 
 -- DROP TABLE public.account;
@@ -21,3 +26,7 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.account
     OWNER to postgres;
+
+-- Alter Sequence
+
+alter sequence account_user_id_seq owned by account.user_id
