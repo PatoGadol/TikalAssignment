@@ -1,6 +1,8 @@
-package com.tikal.controllers;
+package com.tikal.photos.controller;
 
-import com.tikal.services.PhotosHandler;
+import com.tikal.photos.services.PhotosHandler;
+import com.tikal.photos.services.PhotosHandlerImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +18,9 @@ import java.io.IOException;
 @RestController
 @EnableAutoConfiguration
 public class PhotosController {
+
+    @Autowired
+    PhotosHandler photosHandler;
 
     @GetMapping(value = "/hello")
     public String getHello() {
@@ -33,7 +38,6 @@ public class PhotosController {
         if (uploadingPhotos.length == 0)
             return "Failed to load photos, since no photos where selected. Please try again.";
         try {
-            PhotosHandler photosHandler = new PhotosHandler();
             photosHandler.uploadFiles(uploadingPhotos, userName);
 
         } catch (IOException e) {
@@ -43,10 +47,4 @@ public class PhotosController {
         return "Your photos were uploaded successfully.";
     }
 }
-/*    @Bean
-    public EmbeddedServletContainerCustomizer containerCustomizer() {
-        return (container -> {
-            container.setPort(8012);
-        });
-    }*/
 

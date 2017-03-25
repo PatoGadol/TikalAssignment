@@ -1,6 +1,6 @@
 package com.tikal.auth.service;
 
-import com.tikal.accounts.AccountsRepository;
+import com.tikal.auth.repository.AccountRepository;
 import com.tikal.auth.model.Account;
 import com.tikal.auth.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +23,12 @@ import java.util.Set;
 public class AccountDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private AccountsRepository accountsRepository;
+    private AccountRepository accountRepository;
 
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        Account account = accountsRepository.findByUsername(userName);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Account account = accountRepository.findByUserName(username);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         for (Role role : account.getRoles()){

@@ -1,4 +1,4 @@
-package com.tikal.controllers.exceptions;
+package com.tikal.photos.exceptions;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

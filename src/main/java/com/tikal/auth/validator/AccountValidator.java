@@ -27,7 +27,7 @@ public class AccountValidator implements Validator {
     public void validate(Object o, Errors errors) {
         WebAccount account = (WebAccount) o;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName", "NotEmpty");
         if (account.getUserName().length() < 6 || account.getUserName().length() > 32) {
             errors.rejectValue("userName", "Size.userForm.username");
         }

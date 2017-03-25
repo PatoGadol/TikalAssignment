@@ -1,6 +1,7 @@
-package com.tikal.services;
+package com.tikal.photos.services;
 
 import com.tikal.utils.OperationSystemDetermination;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -14,13 +15,15 @@ import java.util.Arrays;
 /**
  * Created by Sopher on 22/03/2017.
  */
-public class PhotosHandler {
+
+@Service
+public class PhotosHandlerImpl implements PhotosHandler{
 
     private static String UPLOADED_FOLDER_WINDOWS = "D:\\UploadedPhotos\\";
     private static String UPLOADED_FOLDER_LINUX = "D:/UploadedPhotos/";
 
-
-    public void uploadFiles(MultipartFile[] uploadingPhotos, String userName) throws IOException{
+    @Override
+    public void uploadFiles(MultipartFile[] uploadingPhotos, String userName) throws IOException {
         Arrays.stream(uploadingPhotos).forEach(x -> {
             try {
                 uploadPhoto(userName, x);
@@ -30,6 +33,7 @@ public class PhotosHandler {
         });
     }
 
+    @Override
     public void uploadPhoto(String userName, MultipartFile file) throws IOException {
         String os = OperationSystemDetermination.getOperationSystem();
         byte[] bytes = file.getBytes();

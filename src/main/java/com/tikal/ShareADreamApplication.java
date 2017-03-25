@@ -1,6 +1,5 @@
 package com.tikal;
 
-import com.tikal.login.WebSecurityConfigOld;
 import org.apache.coyote.http11.AbstractHttp11Protocol;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +12,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ComponentScan("com.tikal")
-@Import(WebSecurityConfigOld.class)
 @EnableJpaRepositories
 public class ShareADreamApplication {
 
