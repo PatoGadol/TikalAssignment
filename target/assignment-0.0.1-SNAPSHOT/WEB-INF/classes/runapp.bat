@@ -1,1 +1,1 @@
-java -jar ..\..\assignment-0.0.1-SNAPSHOT.jar --server.port= 9090
+java -jar ..\..\..\target\assignment-0.0.1-SNAPSHOT.war --server.port=9090
