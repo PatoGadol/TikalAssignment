@@ -1,6 +1,6 @@
 -- Create Sequence
 
-create sequence role_role_id_seq increment by 1 minvalue 1 no maxvalue start with 1
+create sequence role_role_id_seq increment by 1 minvalue 1 no maxvalue start with 1;
 
 
 -- Table: public.role

@@ -1,6 +1,7 @@
 package com.tikal.auth.repository;
 
 import com.tikal.auth.model.Account;
+import com.tikal.auth.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

@@ -13,7 +13,8 @@ import java.util.Set;
 @Table(name = "account")
 public class Account  implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="account_user_id_seq")
+    @SequenceGenerator(name="account_user_id_seq", sequenceName="account_user_id_seq", allocationSize=1)
     private Long userId;
 
     @Column(nullable = false)
@@ -89,46 +90,5 @@ public class Account  implements Serializable {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Account account = (Account) o;
-
-        if (userId != null ? !userId.equals(account.userId) : account.userId != null) return false;
-        if (userName != null ? !userName.equals(account.userName) : account.userName != null) return false;
-        if (password != null ? !password.equals(account.password) : account.password != null) return false;
-        if (email != null ? !email.equals(account.email) : account.email != null) return false;
-        if (createdOn != null ? !createdOn.equals(account.createdOn) : account.createdOn != null) return false;
-        if (lastLogin != null ? !lastLogin.equals(account.lastLogin) : account.lastLogin != null) return false;
-        return roles != null ? roles.equals(account.roles) : account.roles == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = userId != null ? userId.hashCode() : 0;
-        result = 31 * result + (userName != null ? userName.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (createdOn != null ? createdOn.hashCode() : 0);
-        result = 31 * result + (lastLogin != null ? lastLogin.hashCode() : 0);
-        result = 31 * result + (roles != null ? roles.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Account{" +
-                "userId=" + userId +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", createdOn=" + createdOn +
-                ", lastLogin=" + lastLogin +
-                ", roles=" + roles +
-                '}';
     }
 }

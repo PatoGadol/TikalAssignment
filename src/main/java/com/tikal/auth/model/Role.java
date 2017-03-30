@@ -1,5 +1,6 @@
 package com.tikal.auth.model;
 
+import javax.annotation.Generated;
 import javax.persistence.*;
 import java.util.Set;
 
@@ -9,17 +10,27 @@ import java.util.Set;
 
 @Entity
 @Table(name = "role")
+//@NamedQueries(
+        @NamedQuery(name = "Role.findAll", query="SELECT r FROM Role r ")
+//)
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="role_role_id_seq")
+    @SequenceGenerator(name="role_role_id_seq", sequenceName="role_role_id_seq")
     private int roleId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String roleName;
 
     @ManyToMany(mappedBy = "roles")
     private Set<Account> accounts;
+
+    public Role() {}
+
+    public Role(String roleName) {
+        this.roleName = roleName;
+    }
 
     public int getRoleId() {
         return roleId;
@@ -45,24 +56,9 @@ public class Role {
         this.accounts = accounts;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public void addAccount(Account account) {
+        accounts.add(account);
 
-        Role role = (Role) o;
-
-        if (roleId != role.roleId) return false;
-        if (roleName != null ? !roleName.equals(role.roleName) : role.roleName != null) return false;
-        return accounts != null ? accounts.equals(role.accounts) : role.accounts == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = roleId;
-        result = 31 * result + (roleName != null ? roleName.hashCode() : 0);
-        result = 31 * result + (accounts != null ? accounts.hashCode() : 0);
-        return result;
     }
 
     @Override
