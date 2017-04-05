@@ -1,6 +1,5 @@
 package com.tikal.auth.validator;
 
-import com.tikal.auth.model.Account;
 import com.tikal.auth.service.AccountService;
 import com.tikal.web.entities.WebAccount;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +26,12 @@ public class AccountValidator implements Validator {
     public void validate(Object o, Errors errors) {
         WebAccount account = (WebAccount) o;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName", "NotEmpty");
-        if (account.getUserName().length() < 6 || account.getUserName().length() > 32) {
-            errors.rejectValue("userName", "Size.userForm.username");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
+        if (account.getUsername().length() < 6 || account.getUsername().length() > 32) {
+            errors.rejectValue("username", "Size.userForm.username");
         }
-        if (accountService.findByUsername(account.getUserName()) != null) {
-            errors.rejectValue("userName", "Duplicate.userForm.username");
+        if (accountService.findByUsername(account.getUsername()) != null) {
+            errors.rejectValue("username", "Duplicate.userForm.username");
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");

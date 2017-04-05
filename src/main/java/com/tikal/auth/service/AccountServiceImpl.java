@@ -57,17 +57,12 @@ public class AccountServiceImpl implements AccountService {
 
     private Account convertWebAccountToAccount(WebAccount webAccount) {
         Account account = new Account();
-        account.setUserName(webAccount.getUserName());
+        account.setUserName(webAccount.getUsername());
         account.setPassword(webAccount.getPassword());
         account.setEmail(webAccount.getEmail());
         account.setCreatedOn(new Date());
         account.setLastLogin(new Date());
 
         return account;
-    }
-
-    @Override
-    public WebAccount login(String username, String password) {
-        return new WebAccount();
     }
 }

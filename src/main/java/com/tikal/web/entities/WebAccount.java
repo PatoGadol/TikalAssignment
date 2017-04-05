@@ -1,8 +1,6 @@
 package com.tikal.web.entities;
 
 import com.tikal.auth.model.Role;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -14,7 +12,7 @@ import java.util.Set;
 /*@Component
 @Scope(value="session")*/
 public class WebAccount implements Serializable {
-    String userName;
+    String username;
     String password;
     String email;
     Set<Role> roles;
@@ -27,12 +25,12 @@ public class WebAccount implements Serializable {
         this.roles = roles;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -58,7 +56,7 @@ public class WebAccount implements Serializable {
 
         WebAccount that = (WebAccount) o;
 
-        if (userName != null ? !userName.equals(that.userName) : that.userName != null) return false;
+        if (username != null ? !username.equals(that.username) : that.username != null) return false;
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         return roles != null ? roles.equals(that.roles) : that.roles == null;
@@ -67,7 +65,7 @@ public class WebAccount implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = userName != null ? userName.hashCode() : 0;
+        int result = username != null ? username.hashCode() : 0;
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (roles != null ? roles.hashCode() : 0);
@@ -77,7 +75,7 @@ public class WebAccount implements Serializable {
     @Override
     public String toString() {
         return "WebAccount{" +
-                "userName='" + userName + '\'' +
+                "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", roles=" + roles +

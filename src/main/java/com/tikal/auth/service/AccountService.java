@@ -18,7 +18,4 @@ public interface AccountService{
     void save(WebRole role);
 
     Role findByRole(String role);
-
-    WebAccount login(String username, String password);
-
 }

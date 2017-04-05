@@ -22,16 +22,6 @@ public class PhotosController {
     @Autowired
     PhotosHandler photosHandler;
 
-    @GetMapping(value = "/hello")
-    public String getHello() {
-        return "hello";
-    }
-
-   @GetMapping(value = "/bye")
-    public String getBye() {
-        return "bye";
-    }
-
     @PostMapping(value = "/upload_photos")
     public String uploadingPost(@RequestParam("user") String userName,
                                 @RequestParam("uploadingPhotos") MultipartFile[] uploadingPhotos) throws IOException {
