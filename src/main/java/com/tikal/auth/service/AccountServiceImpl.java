@@ -1,5 +1,6 @@
 package com.tikal.auth.service;
 
+import com.tikal.auth.cache.CacheImpl;
 import com.tikal.auth.model.Account;
 import com.tikal.auth.model.Role;
 import com.tikal.auth.repository.AccountRepository;
@@ -7,6 +8,7 @@ import com.tikal.auth.repository.RoleRepository;
 import com.tikal.web.entities.WebAccount;
 import com.tikal.web.entities.WebRole;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,9 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private static CacheImpl<String, Set<Role>> accountCache;
+
     @Override
     public void save(WebAccount webAccount) {
         Account account = convertWebAccountToAccount(webAccount);
@@ -41,6 +46,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Cacheable
     public Account findByUsername(String userName) {
         return accountRepository.findByUserName(userName);
     }
@@ -51,8 +57,17 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Cacheable
     public Role findByRole(String role) {
         return roleRepository.findByRoleName(role.toLowerCase());
+    }
+
+    @Override
+    public void tryCache(String username) throws NullPointerException {
+        if (!accountCache.contains(username)) {
+            Account account = findByUsername(username);
+            accountCache.put(username, account.getRoles());
+        }
     }
 
     private Account convertWebAccountToAccount(WebAccount webAccount) {
@@ -64,5 +79,9 @@ public class AccountServiceImpl implements AccountService {
         account.setLastLogin(new Date());
 
         return account;
+    }
+
+    public static CacheImpl<String, Set<Role>> accountCache() {
+        return accountCache;
     }
 }
