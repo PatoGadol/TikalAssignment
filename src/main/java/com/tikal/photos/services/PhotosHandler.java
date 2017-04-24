@@ -9,7 +9,8 @@ import java.io.IOException;
  */
 public interface PhotosHandler {
 
-    public void uploadFiles(MultipartFile[] uploadingPhotos, String userName) throws IOException;
+    public void uploadFiles(String userName, MultipartFile[] uploadingPhotos) throws IOException;
     public void uploadPhoto(String userName, MultipartFile file) throws IOException;
 
+    public MultipartFile[] getFiles(String userName) throws IOException;
 }

@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 /**
  * Created by Sopher on 22/03/2017.
@@ -23,7 +24,7 @@ public class PhotosHandlerImpl implements PhotosHandler{
     private static String UPLOADED_FOLDER_LINUX = "D:/UploadedPhotos/";
 
     @Override
-    public void uploadFiles(MultipartFile[] uploadingPhotos, String userName) throws IOException {
+    public void uploadFiles(String userName, MultipartFile[] uploadingPhotos) throws IOException {
         Arrays.stream(uploadingPhotos).forEach(x -> {
             try {
                 uploadPhoto(userName, x);
@@ -35,13 +36,33 @@ public class PhotosHandlerImpl implements PhotosHandler{
 
     @Override
     public void uploadPhoto(String userName, MultipartFile file) throws IOException {
-        String os = OperationSystemDetermination.getOperationSystem();
-        byte[] bytes = file.getBytes();
-        boolean isWindows = os.contains(OperationSystemDetermination.WINDOWS);
-        String savePath = isWindows ? UPLOADED_FOLDER_WINDOWS.concat(userName + "\\")
-                : UPLOADED_FOLDER_LINUX.concat(userName + "/");
+        String savePath = getFolderPath(userName);
         boolean isNewDir = new File(savePath).mkdirs();
+        byte[] bytes = file.getBytes();
         Path path = Paths.get(savePath.concat(file.getOriginalFilename()));
         Files.write(path, bytes);
+    }
+
+    @Override
+    public MultipartFile[] getFiles(String userName) throws IOException {
+        String loadPath = getFolderPath(userName);
+        Path path = Paths.get(loadPath);
+
+        try(Stream<Path> paths = Files.walk(path)) {
+            paths.forEach(filePath -> {
+                if (Files.isRegularFile(filePath)) {
+                    System.out.println(filePath);
+                }
+            });
+        }
+
+        return new MultipartFile[0];
+    }
+
+    private String getFolderPath(String userName) {
+        String os = OperationSystemDetermination.getOperationSystem();
+        boolean isWindows = os.contains(OperationSystemDetermination.WINDOWS);
+        return isWindows ? UPLOADED_FOLDER_WINDOWS.concat(userName + "\\")
+                : UPLOADED_FOLDER_LINUX.concat(userName + "/");
     }
 }
