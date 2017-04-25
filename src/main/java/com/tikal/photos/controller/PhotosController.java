@@ -1,5 +1,6 @@
 package com.tikal.photos.controller;
 
+import com.tikal.photos.model.PhotoMetaData;
 import com.tikal.photos.services.PhotosHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -62,6 +63,8 @@ public class PhotosController {
         return null;
     }
 
-
+   /* @GetMapping(value = "/photo_metadata")
+    public PhotoMetaData getPhotosHandler() {
+        return photosHandler.getPhotoMetaDataByDate();
+    }*/
 }
-

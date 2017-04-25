@@ -1,8 +1,11 @@
 package com.tikal.photos.services;
 
+import com.tikal.photos.model.PhotoMetaData;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,6 +17,14 @@ public interface PhotosHandler {
     public void uploadPhoto(String userName, MultipartFile file) throws IOException;
 
     public List<String> getFilesNames(String userName) throws IOException;
-
     public byte[] getPhoto(String userName, String photoName) throws IOException;
+
+    @Profile(value = "business")
+    public PhotoMetaData getPhotoMetaDataByDate(Date date);
+
+    @Profile(value = "business")
+    public List<PhotoMetaData> getPhotoMetaDataByLandscape(String landscape);
+
+    @Profile(value = "business")
+    public List<PhotoMetaData> getPhotoMetaDataByString(String location);
 }

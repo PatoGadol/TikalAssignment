@@ -1,6 +1,10 @@
 package com.tikal.photos.services;
 
+import com.tikal.photos.model.PhotoMetaData;
+import com.tikal.photos.repository.PhotoRepository;
 import com.tikal.utils.OperationSystemDetermination;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -27,6 +32,9 @@ public class PhotosHandlerImpl implements PhotosHandler{
 
     private static String UPLOADED_FOLDER_WINDOWS = "D:\\UploadedPhotos\\";
     private static String UPLOADED_FOLDER_LINUX = "D:/UploadedPhotos/";
+
+    @Autowired
+    private PhotoRepository photoRepository;
 
     @Override
     public void uploadFiles(String userName, MultipartFile[] uploadingPhotos) throws IOException {
@@ -84,10 +92,29 @@ public class PhotosHandlerImpl implements PhotosHandler{
         return baos.toByteArray();
     }
 
+    @Profile(value = "business")
+    @Override
+    public PhotoMetaData getPhotoMetaDataByDate(Date date) {
+        return photoRepository.findByDate(date);
+    }
+
+    @Profile(value = "business")
+    @Override
+    public List<PhotoMetaData> getPhotoMetaDataByLandscape(String landscape) {
+        return  photoRepository.findByLandscape(landscape);
+    }
+
+    @Profile(value = "business")
+    @Override
+    public List<PhotoMetaData> getPhotoMetaDataByString(String location) {
+        return photoRepository.findByLocation(location);
+    }
+
     private String getFolderPath(String userName) {
         String os = OperationSystemDetermination.getOperationSystem();
         boolean isWindows = os.contains(OperationSystemDetermination.WINDOWS);
         return isWindows ? UPLOADED_FOLDER_WINDOWS.concat(userName + "\\")
                 : UPLOADED_FOLDER_LINUX.concat(userName + "/");
     }
+
 }
