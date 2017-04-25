@@ -1,9 +1,9 @@
 package com.tikal.photos.controller;
 
 import com.tikal.photos.services.PhotosHandler;
-import com.tikal.photos.services.PhotosHandlerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Sopher on 24/02/2017.
@@ -38,9 +39,9 @@ public class PhotosController {
     }
 
     @GetMapping(value = "/see_photos")
-    public MultipartFile[] downloadPhotos(@RequestParam("user") String userName) throws IOException {
+    public List<String> getPhotosNames(@RequestParam("user") String userName) throws IOException {
         try {
-            return photosHandler.getFiles(userName);
+            return photosHandler.getFilesNames(userName);
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -48,5 +49,19 @@ public class PhotosController {
 
         return null;
     }
+
+    @GetMapping(value = "/photo", produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] downloadPhoto(@RequestParam("user") String userName, @RequestParam("photo_name") String photoName) throws IOException {
+        try {
+            return photosHandler.getPhoto(userName, photoName);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
 }
 

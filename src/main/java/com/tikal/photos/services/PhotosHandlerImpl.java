@@ -4,13 +4,18 @@ import com.tikal.utils.OperationSystemDetermination;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -44,19 +49,39 @@ public class PhotosHandlerImpl implements PhotosHandler{
     }
 
     @Override
-    public MultipartFile[] getFiles(String userName) throws IOException {
+    public List<String> getFilesNames(String userName) throws IOException {
         String loadPath = getFolderPath(userName);
         Path path = Paths.get(loadPath);
+        List<String> filesNames = new ArrayList<>();
 
-        try(Stream<Path> paths = Files.walk(path)) {
+        try (Stream<Path> paths = Files.walk(path)) {
             paths.forEach(filePath -> {
                 if (Files.isRegularFile(filePath)) {
-                    System.out.println(filePath);
+                    filesNames.add(filePath.toString());
+
                 }
             });
         }
 
-        return new MultipartFile[0];
+        return filesNames;
+    }
+
+    @Override
+    public byte[] getPhoto(String userName, String photoName) {
+        String filePathStr = getFolderPath(userName) + photoName;
+        Path filePath = Paths.get(filePathStr);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        String extension = photoName.split("\\.")[1];
+        try {
+            BufferedImage bufferedImage = ImageIO.read(Files.newInputStream(filePath));
+            ImageIO.write(bufferedImage, extension, baos);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new UncheckedIOException(e);
+        }
+        System.out.println(filePath);
+        return baos.toByteArray();
     }
 
     private String getFolderPath(String userName) {
