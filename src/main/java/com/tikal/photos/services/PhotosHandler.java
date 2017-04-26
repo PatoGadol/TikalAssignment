@@ -27,4 +27,7 @@ public interface PhotosHandler {
 
     @Profile(value = "business")
     public List<PhotoMetaData> getPhotoMetaDataByString(String location);
+
+    @Profile(value = "business")
+    public String save(PhotoMetaData photoMetaData);
 }

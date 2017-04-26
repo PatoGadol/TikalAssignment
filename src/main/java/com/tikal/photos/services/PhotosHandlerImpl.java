@@ -110,6 +110,13 @@ public class PhotosHandlerImpl implements PhotosHandler{
         return photoRepository.findByLocation(location);
     }
 
+    @Profile(value = "business")
+    @Override
+    public String save(PhotoMetaData photoMetaData) {
+        photoRepository.save(photoMetaData);
+        return "MetaData saved.";
+    }
+
     private String getFolderPath(String userName) {
         String os = OperationSystemDetermination.getOperationSystem();
         boolean isWindows = os.contains(OperationSystemDetermination.WINDOWS);

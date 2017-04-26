@@ -4,11 +4,9 @@ import com.tikal.photos.model.PhotoMetaData;
 import com.tikal.photos.services.PhotosHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -63,7 +61,20 @@ public class PhotosController {
         return null;
     }
 
-   /* @GetMapping(value = "/photo_metadata")
+    @PostMapping(value = "/photo_metadata")
+    @Profile(value = "business")
+    public String uploadPhotoMetaData(@RequestBody PhotoMetaData photoMetaData) {
+        return photosHandler.save(photoMetaData);
+    }
+
+
+    @GetMapping(value = "/photo_metadata_by_landscape")
+    @Profile(value = "business")
+    public List<PhotoMetaData> getPhotosHandler(@RequestParam("landscape") String landscape) {
+        return photosHandler.getPhotoMetaDataByLandscape(landscape);
+    }
+
+    /*@GetMapping(value = "/photo_metadata")
     public PhotoMetaData getPhotosHandler() {
         return photosHandler.getPhotoMetaDataByDate();
     }*/
