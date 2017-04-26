@@ -1,9 +1,6 @@
-package com.tikal.auth.controller;
+package com.tikal.controller;
 
-import com.tikal.auth.model.Role;
-import com.tikal.auth.service.AccountService;
-import com.tikal.auth.service.AccountServiceImpl;
-import com.tikal.auth.service.SecurityService;
+import com.tikal.service.AccountService;
 import com.tikal.auth.validator.AccountValidator;
 import com.tikal.web.entities.WebAccount;
 import com.tikal.web.entities.WebRole;
@@ -11,9 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-import java.util.Set;
 
 /**
  * Created by Sopher on 23/03/2017.

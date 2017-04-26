@@ -1,4 +1,4 @@
-package com.tikal.auth.service;
+package com.tikal.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

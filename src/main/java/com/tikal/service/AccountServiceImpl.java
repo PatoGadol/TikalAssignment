@@ -1,10 +1,10 @@
-package com.tikal.auth.service;
+package com.tikal.service;
 
 import com.tikal.auth.cache.CacheImpl;
-import com.tikal.auth.model.Account;
-import com.tikal.auth.model.Role;
-import com.tikal.auth.repository.AccountRepository;
-import com.tikal.auth.repository.RoleRepository;
+import com.tikal.dao.model.Account;
+import com.tikal.dao.model.Role;
+import com.tikal.dao.repository.AccountRepository;
+import com.tikal.dao.repository.RoleRepository;
 import com.tikal.web.entities.WebAccount;
 import com.tikal.web.entities.WebRole;
 import org.springframework.beans.factory.annotation.Autowired;

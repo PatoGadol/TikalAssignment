@@ -1,4 +1,4 @@
-package com.tikal.auth.service;
+package com.tikal.service;
 
 /**
  * Created by Sopher on 23/03/2017.

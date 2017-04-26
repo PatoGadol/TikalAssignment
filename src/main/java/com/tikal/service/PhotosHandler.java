@@ -1,6 +1,6 @@
-package com.tikal.photos.services;
+package com.tikal.service;
 
-import com.tikal.photos.model.PhotoMetaData;
+import com.tikal.dao.model.PhotoMetaData;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.multipart.MultipartFile;
 

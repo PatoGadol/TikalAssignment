@@ -1,4 +1,4 @@
-package com.tikal.auth.model;
+package com.tikal.dao.model;
 
 import javax.persistence.*;
 import java.io.Serializable;

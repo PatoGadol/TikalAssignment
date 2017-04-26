@@ -1,6 +1,6 @@
 package com.tikal.auth.validator;
 
-import com.tikal.auth.service.AccountService;
+import com.tikal.service.AccountService;
 import com.tikal.web.entities.WebAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

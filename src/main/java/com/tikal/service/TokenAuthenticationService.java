@@ -1,19 +1,16 @@
-package com.tikal.auth.service;
+package com.tikal.service;
 
 import com.tikal.WebSecurityConfig;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Date;
-
-import static java.util.Collections.emptyList;
 
 /**
  * Created by pavel_sopher on 02/04/2017.

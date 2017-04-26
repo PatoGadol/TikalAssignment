@@ -1,6 +1,6 @@
-package com.tikal.photos.repository;
+package com.tikal.dao.repository;
 
-import com.tikal.photos.model.PhotoMetaData;
+import com.tikal.dao.model.PhotoMetaData;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Date;

@@ -1,6 +1,6 @@
 package com.tikal.web.entities;
 
-import com.tikal.auth.model.Role;
+import com.tikal.dao.model.Role;
 
 import java.io.Serializable;
 import java.util.Set;

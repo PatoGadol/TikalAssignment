@@ -1,4 +1,4 @@
-package com.tikal.photos.model;
+package com.tikal.dao.model;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.Scope;
@@ -18,7 +18,7 @@ import java.util.Date;
 @Table(name = "photo_metadata")
 public class PhotoMetaData implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="photo_metadata_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(nullable = false)
     private String photoName;

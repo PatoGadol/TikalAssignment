@@ -1,6 +1,5 @@
-package com.tikal.auth.model;
+package com.tikal.dao.model;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.util.Set;
 

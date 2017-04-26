@@ -1,7 +1,7 @@
-package com.tikal.photos.controller;
+package com.tikal.controller;
 
-import com.tikal.photos.model.PhotoMetaData;
-import com.tikal.photos.services.PhotosHandler;
+import com.tikal.dao.model.PhotoMetaData;
+import com.tikal.service.PhotosHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Profile;

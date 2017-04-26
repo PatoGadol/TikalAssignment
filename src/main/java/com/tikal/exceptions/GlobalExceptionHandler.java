@@ -1,4 +1,4 @@
-package com.tikal.photos.exceptions;
+package com.tikal.exceptions;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,5 +18,4 @@ public class GlobalExceptionHandler {
         return "redirect:/uploadStatus";
 
     }
-
 }

@@ -1,7 +1,7 @@
 package com.tikal.auth.filters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tikal.auth.service.TokenAuthenticationService;
+import com.tikal.service.TokenAuthenticationService;
 import com.tikal.web.entities.WebAccount;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

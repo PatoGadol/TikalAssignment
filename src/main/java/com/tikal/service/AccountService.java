@@ -1,7 +1,7 @@
-package com.tikal.auth.service;
+package com.tikal.service;
 
-import com.tikal.auth.model.Account;
-import com.tikal.auth.model.Role;
+import com.tikal.dao.model.Account;
+import com.tikal.dao.model.Role;
 import com.tikal.web.entities.WebAccount;
 import com.tikal.web.entities.WebRole;
 

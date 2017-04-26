@@ -1,8 +1,8 @@
-package com.tikal.auth.service;
+package com.tikal.service;
 
-import com.tikal.auth.repository.AccountRepository;
-import com.tikal.auth.model.Account;
-import com.tikal.auth.model.Role;
+import com.tikal.dao.repository.AccountRepository;
+import com.tikal.dao.model.Account;
+import com.tikal.dao.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

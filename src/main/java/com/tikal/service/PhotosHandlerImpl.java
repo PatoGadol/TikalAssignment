@@ -1,7 +1,8 @@
-package com.tikal.photos.services;
+package com.tikal.service;
 
-import com.tikal.photos.model.PhotoMetaData;
-import com.tikal.photos.repository.PhotoRepository;
+import com.tikal.dao.model.PhotoMetaData;
+import com.tikal.dao.repository.PhotoRepository;
+import com.tikal.service.PhotosHandler;
 import com.tikal.utils.OperationSystemDetermination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -28,7 +29,7 @@ import java.util.stream.Stream;
  */
 
 @Service
-public class PhotosHandlerImpl implements PhotosHandler{
+public class PhotosHandlerImpl implements PhotosHandler {
 
     private static String UPLOADED_FOLDER_WINDOWS = "D:\\UploadedPhotos\\";
     private static String UPLOADED_FOLDER_LINUX = "D:/UploadedPhotos/";
