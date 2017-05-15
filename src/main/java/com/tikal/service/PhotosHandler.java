@@ -1,6 +1,7 @@
 package com.tikal.service;
 
 import com.tikal.dao.model.PhotoMetaData;
+import com.tikal.web.entities.WebPhotoMetaData;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,7 +21,7 @@ public interface PhotosHandler {
     public byte[] getPhoto(String userName, String photoName) throws IOException;
 
     @Profile(value = "business")
-    public PhotoMetaData getPhotoMetaDataByDate(Date date);
+    public PhotoMetaData getPhotoMetaDataByDate(Date dateCreated);
 
     @Profile(value = "business")
     public List<PhotoMetaData> getPhotoMetaDataByLandscape(String landscape);
@@ -29,5 +30,5 @@ public interface PhotosHandler {
     public List<PhotoMetaData> getPhotoMetaDataByString(String location);
 
     @Profile(value = "business")
-    public String save(PhotoMetaData photoMetaData);
+    public String save(WebPhotoMetaData webPhotoMetaData);
 }

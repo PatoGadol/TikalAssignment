@@ -13,5 +13,5 @@ public interface PhotoRepository extends CrudRepository<PhotoMetaData, Long> {
     PhotoMetaData findByPhotoName(String photoName);
     List<PhotoMetaData> findByLocation(String location);
     List<PhotoMetaData> findByLandscape(String landscape);
-    PhotoMetaData findByDate(Date date);
+    PhotoMetaData findByDateCreated(Date dateCreated);
 }

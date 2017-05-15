@@ -19,5 +19,4 @@ public interface AccountService{
 
     Role findByRole(String role);
 
-    void tryCache(String username) throws NullPointerException;
 }

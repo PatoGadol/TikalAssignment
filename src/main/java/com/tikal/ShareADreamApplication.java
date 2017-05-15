@@ -24,7 +24,6 @@ import java.util.concurrent.Executor;
 @ComponentScan("com.tikal")
 @EnableJpaRepositories
 @EnableAsync
-@EnableCaching
 public class ShareADreamApplication {
 
 	public static void main(String[] args) {

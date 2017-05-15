@@ -2,8 +2,8 @@ package com.tikal.service;
 
 import com.tikal.dao.model.PhotoMetaData;
 import com.tikal.dao.repository.PhotoRepository;
-import com.tikal.service.PhotosHandler;
 import com.tikal.utils.OperationSystemDetermination;
+import com.tikal.web.entities.WebPhotoMetaData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -95,8 +95,8 @@ public class PhotosHandlerImpl implements PhotosHandler {
 
     @Profile(value = "business")
     @Override
-    public PhotoMetaData getPhotoMetaDataByDate(Date date) {
-        return photoRepository.findByDate(date);
+    public PhotoMetaData getPhotoMetaDataByDate(Date dateCreated) {
+        return photoRepository.findByDateCreated(dateCreated);
     }
 
     @Profile(value = "business")
@@ -113,9 +113,16 @@ public class PhotosHandlerImpl implements PhotosHandler {
 
     @Profile(value = "business")
     @Override
-    public String save(PhotoMetaData photoMetaData) {
-        photoRepository.save(photoMetaData);
+    public String save(WebPhotoMetaData webPhotoMetaData) {
+        photoRepository.save(convertToPhotoMetaData(webPhotoMetaData));
         return "MetaData saved.";
+    }
+
+    private PhotoMetaData convertToPhotoMetaData(WebPhotoMetaData webPhotoMetaData) {
+        return new PhotoMetaData(webPhotoMetaData.getLocation(),
+                webPhotoMetaData.getLandscape(),
+                webPhotoMetaData.getPhotoName(),
+                webPhotoMetaData.getDateCreated());
     }
 
     private String getFolderPath(String userName) {

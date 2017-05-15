@@ -18,23 +18,24 @@ import java.util.Date;
 @Table(name = "photo_metadata")
 public class PhotoMetaData implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="photo_metadata_id_seq")
+    @SequenceGenerator(name="photo_metadata_id_seq", sequenceName="photo_metadata_id_seq", allocationSize=1)
+    private Long photoMetadataId;
     @Column(nullable = false)
     private String photoName;
     @Column
     private String location;
     @Column
-    private Date date;
+    private Date dateCreated;
     @Column
     private String landscape;
 
-    public Date getDate() {
-        return date;
+    public Date getDateCreated() {
+        return dateCreated;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     public String getLandscape() {
@@ -61,19 +62,20 @@ public class PhotoMetaData implements Serializable{
         this.photoName = photoName;
     }
 
-    public Long getId() {
-        return id;
+    public Long getPhotoMetadataId() {
+        return photoMetadataId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPhotoMetadataId(Long photoMetadataId) {
+        this.photoMetadataId = photoMetadataId;
     }
 
     private PhotoMetaData() {}
 
-    public PhotoMetaData(String location, String landscape, Date date) {
+    public PhotoMetaData(String location, String landscape, String photoName, Date date) {
         this.location = location;
         this.landscape = landscape;
-        this.date = date;
+        this.photoName = photoName;
+        this.dateCreated = date;
     }
 }

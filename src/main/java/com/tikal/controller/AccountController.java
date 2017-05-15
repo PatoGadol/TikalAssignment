@@ -2,6 +2,7 @@ package com.tikal.controller;
 
 import com.tikal.service.AccountService;
 import com.tikal.auth.validator.AccountValidator;
+import com.tikal.utils.Mail;
 import com.tikal.web.entities.WebAccount;
 import com.tikal.web.entities.WebRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,16 @@ public class AccountController {
             return "Please make sure your username is 6-32 chars, and password 8-32 chars.";
         }
 
-        accountService.save(webAccount);
+        try {
+            accountService.save(webAccount);
+            Mail.sendMail(webAccount.getEmail(), "User: " + webAccount.getUsername() +
+                    ", is registered to share a dream. Thank you for using our program.");
 
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return "Failed to register.";
+        }
         return "Registration succeeded.";
     }
 

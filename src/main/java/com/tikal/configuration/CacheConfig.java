@@ -6,6 +6,7 @@ package com.tikal.configuration;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheManager;
@@ -13,11 +14,13 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 @Configuration
 @EnableCaching
 public class CacheConfig extends CachingConfigurerSupport {
 
-    @Bean
+/*    @Bean
     public JedisConnectionFactory redisConnectionFactory() {
         JedisConnectionFactory redisConnectionFactory = new JedisConnectionFactory();
         // Defaults
@@ -39,6 +42,12 @@ public class CacheConfig extends CachingConfigurerSupport {
 
         // Number of seconds before expiration. Defaults to unlimited (0)
         cacheManager.setDefaultExpiration(10);
+        return cacheManager;
+    }*/
+
+    @Bean
+    public CacheManager cacheManager() {
+        ConcurrentMapCacheManager cacheManager = new ConcurrentMapCacheManager("CachePOC");
         return cacheManager;
     }
 }

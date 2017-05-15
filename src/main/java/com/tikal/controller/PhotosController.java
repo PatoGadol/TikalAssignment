@@ -2,10 +2,14 @@ package com.tikal.controller;
 
 import com.tikal.dao.model.PhotoMetaData;
 import com.tikal.service.PhotosHandler;
+import com.tikal.web.entities.WebNotification;
+import com.tikal.web.entities.WebPhotoMetaData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -63,7 +67,7 @@ public class PhotosController {
 
     @PostMapping(value = "/photo_metadata")
     @Profile(value = "business")
-    public String uploadPhotoMetaData(@RequestBody PhotoMetaData photoMetaData) {
+    public String uploadPhotoMetaData(@RequestBody WebPhotoMetaData photoMetaData) {
         return photosHandler.save(photoMetaData);
     }
 
@@ -72,6 +76,13 @@ public class PhotosController {
     @Profile(value = "business")
     public List<PhotoMetaData> getPhotosHandler(@RequestParam("landscape") String landscape) {
         return photosHandler.getPhotoMetaDataByLandscape(landscape);
+    }
+
+    @MessageMapping("/hello")
+    @SendTo("/topic/greetings")
+    public WebNotification greeting(String message) throws Exception {
+        Thread.sleep(1000); // simulated delay
+        return new WebNotification("Hello, " + new WebNotification(message) + "!");
     }
 
     /*@GetMapping(value = "/photo_metadata")
