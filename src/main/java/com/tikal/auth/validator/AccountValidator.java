@@ -28,15 +28,15 @@ public class AccountValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
         if (account.getUsername().length() < 6 || account.getUsername().length() > 32) {
-            errors.rejectValue("username", "Size.userForm.username");
+            errors.rejectValue("username", /*"Size.userForm.username"*/"Choose username between 6 and 32 chars.");
         }
-        if (accountService.findByUsername(account.getUsername()) != null) {
-            errors.rejectValue("username", "Duplicate.userForm.username");
+        if (accountService.findAccountByUsername(account.getUsername()) != null) {
+            errors.rejectValue("username", /*"Duplicate.userForm.username"*/"Username exists, please choose a different one.");
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
         if (account.getPassword().length() < 8 || account.getPassword().length() > 32) {
-            errors.rejectValue("password", "Size.userForm.password");
+            errors.rejectValue("password", /*"Size.userForm.password"*/"Choose password between 8 and 32 chars.");
         }
     }
 }

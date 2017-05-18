@@ -14,6 +14,5 @@ public interface RoleRepository extends JpaRepository<Role, Long>{
 
     @Query
     @Override
-    @Cacheable
     public List<Role> findAll();
 }

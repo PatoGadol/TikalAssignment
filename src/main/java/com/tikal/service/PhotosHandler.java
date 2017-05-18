@@ -14,11 +14,11 @@ import java.util.List;
  */
 public interface PhotosHandler {
 
-    public void uploadFiles(String userName, MultipartFile[] uploadingPhotos) throws IOException;
-    public void uploadPhoto(String userName, MultipartFile file) throws IOException;
+    public void uploadFiles(String username, MultipartFile[] uploadingPhotos) throws IOException;
+    public void uploadPhoto(String username, MultipartFile file) throws IOException;
 
-    public List<String> getFilesNames(String userName) throws IOException;
-    public byte[] getPhoto(String userName, String photoName) throws IOException;
+    public List<String> getFilesNames(String username) throws IOException;
+    public byte[] getPhoto(String username, String photoName) throws IOException;
 
     @Profile(value = "business")
     public PhotoMetaData getPhotoMetaDataByDate(Date dateCreated);

@@ -27,12 +27,12 @@ public class PhotosController {
     PhotosHandler photosHandler;
 
     @PostMapping(value = "/upload_photos")
-    public String uploadPhotos(@RequestParam("user") String userName,
+    public String uploadPhotos(@RequestParam("user") String username,
                                @RequestParam("uploadingPhotos") MultipartFile[] uploadingPhotos) throws IOException {
         if (uploadingPhotos.length == 0)
             return "Failed to load photos, since no photos where selected. Please try again.";
         try {
-            photosHandler.uploadFiles(userName, uploadingPhotos);
+            photosHandler.uploadFiles(username, uploadingPhotos);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,9 +42,9 @@ public class PhotosController {
     }
 
     @GetMapping(value = "/see_photos")
-    public List<String> getPhotosNames(@RequestParam("user") String userName) throws IOException {
+    public List<String> getPhotosNames(@RequestParam("user") String username) throws IOException {
         try {
-            return photosHandler.getFilesNames(userName);
+            return photosHandler.getFilesNames(username);
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -54,9 +54,9 @@ public class PhotosController {
     }
 
     @GetMapping(value = "/photo", produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] downloadPhoto(@RequestParam("user") String userName, @RequestParam("photo_name") String photoName) throws IOException {
+    public byte[] downloadPhoto(@RequestParam("user") String username, @RequestParam("photo_name") String photoName) throws IOException {
         try {
-            return photosHandler.getPhoto(userName, photoName);
+            return photosHandler.getPhoto(username, photoName);
         }
         catch (IOException e) {
             e.printStackTrace();

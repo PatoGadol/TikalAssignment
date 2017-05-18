@@ -7,6 +7,7 @@ import com.tikal.dao.repository.RoleRepository;
 import com.tikal.web.entities.WebAccount;
 import com.tikal.web.entities.WebRole;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,8 +32,82 @@ public class AccountServiceImpl implements AccountService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    @CachePut(value = "CachePOC", key = "#account.userId")
-    public void save(WebAccount webAccount) {
+    @CachePut(value = "cachePOC", key = "#result.username")
+    public Account saveAccount(WebAccount webAccount) {
+        Account account = convertWebAccountToAccountWithRoles(webAccount);
+        accountRepository.save(account);
+        return account;
+    }
+
+    @Override
+    @Cacheable(value = "cachePOC", key = "#username" )
+    public Account findAccountByUsername(String username) {
+        return accountRepository.findByUsername(username);
+    }
+
+    @Override
+    @CachePut(value = "cachePOC", key = "#webAccount.username" )
+    public void updateAccount(WebAccount webAccount) {
+        Account account = accountRepository.findByUsername(webAccount.getUsername());
+        if (account != null) {
+            account = convertWebAccountToAccountWithRoles(webAccount);
+        }
+
+        accountRepository.save(account);
+    }
+
+    @Override
+    @CacheEvict(value = "cachePOC", key = "username")
+    public void deleteAccount(String username) {
+        Account account = accountRepository.findByUsername(username);
+        if (account != null)
+            accountRepository.delete(account);
+    }
+
+    @Override
+    @CacheEvict(value = "cachePOC", allEntries = true)
+    public void evictCache() {
+
+    }
+
+    @Override
+    public void saveRole(WebRole role) {
+        roleRepository.save(new Role(role.getRole().toLowerCase()));
+    }
+
+
+    @Override
+    public Role findByRole(String role) {
+        return roleRepository.findByRoleName(role.toLowerCase());
+    }
+
+    @Override
+    public void updateRole(WebRole webRole) {
+        Role persistentRole = findByRole(webRole.getRole());
+        if (persistentRole != null) {
+            persistentRole.setRoleName(webRole.getRole());
+            roleRepository.save(persistentRole);
+        }
+    }
+
+    @Override
+    public void deleteRole(String role) {
+        Role persistentRole = findByRole(role);
+        roleRepository.delete(persistentRole);
+    }
+
+    private Account convertWebAccountToAccount(WebAccount webAccount) {
+        Account account = new Account();
+        account.setUsername(webAccount.getUsername());
+        account.setPassword(webAccount.getPassword());
+        account.setEmail(webAccount.getEmail());
+        account.setCreatedOn(new Date());
+        account.setLastLogin(new Date());
+
+        return account;
+    }
+
+    private Account convertWebAccountToAccountWithRoles(WebAccount webAccount) {
         Account account = convertWebAccountToAccount(webAccount);
         account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
         List<Role> allRoles = roleRepository.findAll();
@@ -43,34 +118,6 @@ public class AccountServiceImpl implements AccountService {
                 if (role.getRoleName().equals(webRole.getRoleName().toLowerCase()))
                     roles.add(role);
         account.setRoles(roles);
-        accountRepository.save(account);
-    }
-
-    @Override
-    @Cacheable(value = "CachePOC", key = "#username" )
-    public Account findByUsername(String userName) {
-        return accountRepository.findByUserName(userName);
-    }
-
-    @Override
-    public void save(WebRole role) {
-        roleRepository.save(new Role(role.getRole().toLowerCase()));
-    }
-
-    @Override
-    @Cacheable
-    public Role findByRole(String role) {
-        return roleRepository.findByRoleName(role.toLowerCase());
-    }
-
-    private Account convertWebAccountToAccount(WebAccount webAccount) {
-        Account account = new Account();
-        account.setUserName(webAccount.getUsername());
-        account.setPassword(webAccount.getPassword());
-        account.setEmail(webAccount.getEmail());
-        account.setCreatedOn(new Date());
-        account.setLastLogin(new Date());
-
         return account;
     }
 

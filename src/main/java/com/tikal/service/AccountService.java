@@ -11,12 +11,23 @@ import com.tikal.web.entities.WebRole;
 
 public interface AccountService{
 
-    void save(WebAccount webAccount);
+    Account saveAccount(WebAccount webAccount);
 
-    Account findByUsername(String userName);
+    Account findAccountByUsername(String username);
 
-    void save(WebRole role);
+    void updateAccount(WebAccount webAccount);
+
+    void deleteAccount(String username);
+
+    public void evictCache();
+
+
+    void saveRole(WebRole role);
 
     Role findByRole(String role);
+
+    void updateRole(WebRole role);
+
+    void deleteRole(String role);
 
 }

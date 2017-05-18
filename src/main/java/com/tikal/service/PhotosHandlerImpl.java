@@ -38,10 +38,10 @@ public class PhotosHandlerImpl implements PhotosHandler {
     private PhotoRepository photoRepository;
 
     @Override
-    public void uploadFiles(String userName, MultipartFile[] uploadingPhotos) throws IOException {
+    public void uploadFiles(String username, MultipartFile[] uploadingPhotos) throws IOException {
         Arrays.stream(uploadingPhotos).forEach(x -> {
             try {
-                uploadPhoto(userName, x);
+                uploadPhoto(username, x);
             } catch (IOException e) {
                 throw new UncheckedIOException(e);
             }
@@ -49,8 +49,8 @@ public class PhotosHandlerImpl implements PhotosHandler {
     }
 
     @Override
-    public void uploadPhoto(String userName, MultipartFile file) throws IOException {
-        String savePath = getFolderPath(userName);
+    public void uploadPhoto(String username, MultipartFile file) throws IOException {
+        String savePath = getFolderPath(username);
         boolean isNewDir = new File(savePath).mkdirs();
         byte[] bytes = file.getBytes();
         Path path = Paths.get(savePath.concat(file.getOriginalFilename()));
@@ -58,8 +58,8 @@ public class PhotosHandlerImpl implements PhotosHandler {
     }
 
     @Override
-    public List<String> getFilesNames(String userName) throws IOException {
-        String loadPath = getFolderPath(userName);
+    public List<String> getFilesNames(String username) throws IOException {
+        String loadPath = getFolderPath(username);
         Path path = Paths.get(loadPath);
         List<String> filesNames = new ArrayList<>();
 
@@ -76,8 +76,8 @@ public class PhotosHandlerImpl implements PhotosHandler {
     }
 
     @Override
-    public byte[] getPhoto(String userName, String photoName) {
-        String filePathStr = getFolderPath(userName) + photoName;
+    public byte[] getPhoto(String username, String photoName) {
+        String filePathStr = getFolderPath(username) + photoName;
         Path filePath = Paths.get(filePathStr);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         String extension = photoName.split("\\.")[1];
@@ -125,11 +125,11 @@ public class PhotosHandlerImpl implements PhotosHandler {
                 webPhotoMetaData.getDateCreated());
     }
 
-    private String getFolderPath(String userName) {
+    private String getFolderPath(String username) {
         String os = OperationSystemDetermination.getOperationSystem();
         boolean isWindows = os.contains(OperationSystemDetermination.WINDOWS);
-        return isWindows ? UPLOADED_FOLDER_WINDOWS.concat(userName + "\\")
-                : UPLOADED_FOLDER_LINUX.concat(userName + "/");
+        return isWindows ? UPLOADED_FOLDER_WINDOWS.concat(username + "\\")
+                : UPLOADED_FOLDER_LINUX.concat(username + "/");
     }
 
 }

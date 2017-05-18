@@ -7,5 +7,5 @@ public interface SecurityService {
 
     String findLoggedInUserName();
 
-    void autologin(String userName, String password);
+    void autologin(String username, String password);
 }
